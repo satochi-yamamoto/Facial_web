@@ -1,58 +1,37 @@
-# Aplicativo Web de Captura de Imagem com Webcam
+# Web App com Captura de Imagem e Reconhecimento Facial
 
-Este projeto é um aplicativo web que permite capturar uma imagem usando a webcam do computador e salvar a imagem no banco de dados MySQL junto com a data, hora e o nome do usuário logado.
+## Descrição
+
+Este é um aplicativo web que permite capturar imagens através da webcam do computador, salvar no banco de dados MySQL e realizar reconhecimento facial para validar usuários.
 
 ## Funcionalidades
 
-- Captura de imagem da webcam.
-- Salva a imagem no banco de dados MySQL.
-- Registra a data, hora e o nome do usuário.
+- Captura de imagem usando a webcam
+- Salvamento da imagem, data e hora no banco de dados MySQL
+- Reconhecimento facial para validar usuários
 
-## Tecnologias Utilizadas
+## Estrutura do Banco de Dados
 
-- **Frontend:** HTML, CSS, JavaScript
-- **Backend:** Node.js, Express
-- **Banco de Dados:** MySQL
+Crie o banco de dados e as tabelas usando o seguinte script SQL:
 
-## Requisitos
+```sql
+CREATE DATABASE web_app;
 
-- Node.js
-- MySQL
+USE web_app;
 
-## Instalação
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    foto BLOB,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-
-
-Configurar o Banco de Dados
-Crie uma tabela photos no seu banco de dados MySQL:
-
-sql
-Copiar código
-CREATE TABLE photos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  image LONGTEXT NOT NULL,
-  username VARCHAR(255) NOT NULL,
-  timestamp DATETIME NOT NULL
-
-4. Configurar o Banco de Dados no Backend
-Atualize as informações de conexão com o banco de dados no arquivo server.js:
-
-javascript
-Copiar código
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'sua_senha',
-  database: 'seu_banco_de_dados'
-});
-
-
- Executar o Backend
-bash
-Copiar código
-node server.js
-### 1. Clonar o Repositório
-
-```bash
-git clone https://github.com/ydsoftware1979/Facial_web.git
-cd Facial_web
+CREATE TABLE capturas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    imagem BLOB,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);

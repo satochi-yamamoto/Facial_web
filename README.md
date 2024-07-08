@@ -21,11 +21,6 @@ Este projeto é um aplicativo web que permite capturar uma imagem usando a webca
 
 ## Instalação
 
-### 1. Clonar o Repositório
-
-```bash
-git clone https://github.com/ydsoftware1979/Facial_web.git
-cd Facial_web
 
 
 Configurar o Banco de Dados
@@ -56,3 +51,8 @@ const db = mysql.createConnection({
 bash
 Copiar código
 node server.js
+### 1. Clonar o Repositório
+
+```bash
+git clone https://github.com/ydsoftware1979/Facial_web.git
+cd Facial_web

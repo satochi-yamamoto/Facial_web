@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Webcam Capture</title>
+</head>
+<body>
+  <h1>Capturar Imagem da Webcam</h1>
+  <video id="video" width="640" height="480" autoplay></video>
+  <button id="capture">Capturar Imagem</button>
+  <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+  <img id="photo" src="" alt="Sua Foto">
+  <script>
+    // Acessando a webcam
+    (function() {
+      var video = document.getElementById('video');
+
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+          video.srcObject = stream;
+        })
+        .catch(function(err) {
+          console.log("Ocorreu um erro: " + err);
+        });
+
+      // Capturando a imagem
+      document.getElementById('capture').addEventListener('click', function() {
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, 640, 480);
+
+        var dataUrl = canvas.toDataURL('image/png');
+        document.getElementById('photo').src = dataUrl;
+
+        // Enviando a imagem para o backend
+        fetch('/save-photo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            image: dataUrl,
+            username: 'Nome_do_Usuario', // Substitua pelo nome do usuário logado
+            timestamp: new Date().toISOString()
+          })
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

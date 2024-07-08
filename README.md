@@ -24,5 +24,5 @@ Este projeto é um aplicativo web que permite capturar uma imagem usando a webca
 ### 1. Clonar o Repositório
 
 ```bash
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
-cd nome-do-repositorio
+git clone https://github.com/ydsoftware1979/Facial_web.git
+cd Facial_web
